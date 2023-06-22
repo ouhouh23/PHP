@@ -1,14 +1,4 @@
 <?php
 
-$list = [
-    [
-        'verb' => 'find',
-        'noun' => 'job'
-    ],
-    [
-        'verb' => 'kill',
-        'noun' => 'myself'
-    ],
-];
-
-require "views/index.view.php";
+require "functions.php";
+require "router.php";

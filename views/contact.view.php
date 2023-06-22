@@ -4,7 +4,9 @@
 
 <main>
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-        <p>Hello. Welcome to the contact page.</p>
+        <h1>
+            <?= "Welcome to the $heading page." ?>
+        </h1>
     </div>
 </main>
 
