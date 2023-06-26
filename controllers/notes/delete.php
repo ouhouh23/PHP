@@ -2,8 +2,6 @@
 
 use Core\Database;
 
-$heading = 'Selected note';
-
 $config = require base_path('config.php');
 $db = new Database($config);
 
@@ -12,4 +10,8 @@ $note = $db->query('select * from notes where id = ?', [$id])->findOrFail();
 
 authorize($note['user_id'] === 1);
 
-require view_path("notes/show.view.php");
+$db->query('delete from notes where id = :id', [
+	'id' => $_POST['id']]);
+
+header('location: /notes');
+die();
