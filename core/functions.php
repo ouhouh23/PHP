@@ -1,5 +1,15 @@
 <?php
 
+use Core\Response;
+
+function base_path($path) {
+	return BASE_PATH . $path;
+}
+
+function view_path($path) {
+	return base_path("views/$path");
+}
+
 function dd($value) {
 	echo '<pre>';
 	var_dump($value);
@@ -14,7 +24,7 @@ function urlIs($uri) {
 function abort($code = 404) {
 	http_response_code($code);
 
-	require "views/{$code}.php";
+	require view_path("{$code}.php");
 
 	die();
 }

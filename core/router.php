@@ -2,7 +2,7 @@
 
 function routeToController($routes, $uri) {
 	if (array_key_exists($uri, $routes)) {
-		require $routes[$uri];
+		require base_path($routes[$uri]);
 	}
 
 	else {
@@ -10,7 +10,7 @@ function routeToController($routes, $uri) {
 	}
 }
 
-$routes = require 'routes.php';
+$routes = require base_path('routes.php');
 $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
 routeToController($routes, $uri);

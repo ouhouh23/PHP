@@ -1,4 +1,4 @@
 <?php
 
 $heading = 'About';
-require "views/about.view.php";
+require view_path("about.view.php");

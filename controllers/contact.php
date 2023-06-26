@@ -1,4 +1,4 @@
 <?php
 
 $heading = 'Contact';
-require "views/contact.view.php";
+require view_path("contact.view.php");

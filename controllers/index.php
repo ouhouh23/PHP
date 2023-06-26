@@ -1,4 +1,4 @@
 <?php
 
 $heading = 'Home';
-require "views/index.view.php";
+require view_path("index.view.php");
