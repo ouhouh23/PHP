@@ -18,3 +18,11 @@ function abort($code = 404) {
 
 	die();
 }
+
+function authorize($condition) {
+	if ($condition) {
+		return;
+	}
+
+	abort(Response::FORBIDDEN);
+}

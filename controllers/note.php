@@ -6,14 +6,8 @@ $config = require 'config.php';
 $db = new Database($config);
 
 $id = $_GET['id'];
-$note = $db->query('select * from notes where id = ?', [$id])->fetch();
+$note = $db->query('select * from notes where id = ?', [$id])->findOrFail();
 
-if (! $note) {
-	abort(Response::NOT_FOUND);
-}
-
-if ($note['user_id'] !== 1) {
-	abort(Response::FORBIDDEN);
-}
+authorize($note['user_id'] === 1);
 
 require "views/notes/show.view.php";
