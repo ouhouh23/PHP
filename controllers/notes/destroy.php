@@ -1,11 +1,14 @@
 <?php
 
 use Core\Database;
+use Core\App;
+use Core\Container;
 
-$config = require base_path('config.php');
-$db = new Database($config);
+$heading = 'Selected note';
 
-$id = $_GET['id'];
+$db = App::getContainer()->resolve(Database::class);
+
+$id = $_POST['id'];
 $note = $db->query('select * from notes where id = ?', [$id])->findOrFail();
 
 authorize($note['user_id'] === 1);

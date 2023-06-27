@@ -1,11 +1,12 @@
 <?php
 
 use Core\Database;
+use Core\App;
+use Core\Container;
 
-$heading = 'My notes';
+$heading = 'Selected note';
 
-$config = require base_path('config.php');
-$db = new Database($config);
+$db = App::getContainer()->resolve(Database::class);
 
 $notes = $db->query('select * from notes where user_id = 1')->findAll();
 
