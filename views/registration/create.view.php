@@ -15,7 +15,7 @@
                 <div class="-space-y-px rounded-md shadow-sm">
                     <div>
                         <label for="email" class="sr-only">Email address</label>
-                        <input id="email" name="email" type="email" autocomplete="email" required
+                        <input id="email" name="email" type="email"
                                class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                placeholder="Email address">
                     </div>
@@ -35,16 +35,17 @@
                         Register
                     </button>
                 </div>
+                <?php if (!empty($errors)) : ?>
+                    <ul>
+                        <?php if (isset($errors['email'])) : ?>
+                            <li class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></li>
+                        <?php endif; ?>
 
-                <ul>
-                    <?php if (isset($errors['email'])) : ?>
-                        <li class="text-red-500 text-xs mt-2"><?= $errors['email'] ?></li>
-                    <?php endif; ?>
-
-                    <?php if (isset($errors['password'])) : ?>
-                        <li class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></li>
-                    <?php endif; ?>
-                </ul>
+                        <?php if (isset($errors['password'])) : ?>
+                            <li class="text-red-500 text-xs mt-2"><?= $errors['password'] ?></li>
+                        <?php endif; ?>
+                    </ul>
+                <?php endif; ?>
             </form>
         </div>
     </div>

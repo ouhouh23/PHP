@@ -6,6 +6,8 @@ const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . "core/functions.php";
 
+session_start();
+
 spl_autoload_register (function ($class) {
 	str_replace('//', DIRECTORY_SEPARATOR, $class);
 
@@ -21,3 +23,4 @@ $router = new Router;
 require base_path('routes.php');
 
 $router->route($uri, $method);
+
