@@ -13,8 +13,10 @@
                            class="<?= urlIs('/') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Home</a>
                         <a href="/about"
                            class="<?= urlIs('/about') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <?php if ($_SESSION['email'] ?? false) : ?>
                             <a href="/notes"
                                class="<?= urlIs('/notes') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Notes</a>
+                        <?php endif ?>
                         <a href="/contact"
                            class="<?= urlIs('/contact') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                     </div>
@@ -34,7 +36,7 @@
                     </button>
 
                     <!-- Profile dropdown -->
-                    <?php if ($_SESSION['user'] ?? false) : ?>
+                    <?php if ($_SESSION['email'] ?? false) : ?>
                         <div class="relative ml-3">
                             <button type="button"
                                     class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
