@@ -1,8 +1,7 @@
 <?php
 
 use Core\Validator;
-use Core\App;
-use Core\Container;
+use Core\Registrator;
 use Http\Forms\UserForm;
 
 $email = $_POST['email'];
@@ -10,37 +9,18 @@ $password = $_POST['password'];
 
 $form = new UserForm();
 
-if (! $form->validate($email, $password)) {
-	$errors = $form->getErrors();
-	require view_path('registration/create.view.php');
+if ($form->validate($email, $password)) {
+	$registration = new Registrator();
 
-	die();
+	if ($registration->attempt($email, $password)) {
+		$_SESSION['email'] = $email;
+
+		redirect('/');
+	}
+
+	$form->setError('email', 'This email is already registered');
 }
 
-$db = App::getContainer()->resolve('Core\Database');
-$user = $db->query('select * from users where email = :email', [
-	'email' => $email
-	])->find();
+$errors = $form->getErrors();
 
-if ($user) {
-	$errors['email'] = 'This email is already registered';
-}
-
-if (!empty($errors)) {
-	require view_path('registration/create.view.php');
-	die();
-}
-
-else {
-	$db->query('INSERT INTO users(email, password) VALUES(:email, :password)', [
-		'email' => $email,
-		'password' => password_hash($password, PASSWORD_BCRYPT)
-	]);
-
-	$_SESSION['email'] = $email;
-		
-	session_regenerate_id(true);
-	
-	header('location: /');
-	die();
-}
+require view_path('registration/create.view.php');
