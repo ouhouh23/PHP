@@ -3,22 +3,17 @@
 use Core\Validator;
 use Core\App;
 use Core\Container;
+use Http\Forms\UserForm;
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$errors = [];
+$form = new UserForm();
 
-if (!Validator::string($password)) {
-	$errors['password'] = 'please provide correct password';
-}
-
-if (!Validator::email($email)) {
-	$errors['email'] = 'please provide correct email';
-}
-
-if (!empty($errors)) {
+if (! $form->validate($email, $password)) {
+	$errors = $form->getErrors();
 	require view_path('session/create.view.php');
+
 	die();
 }
 

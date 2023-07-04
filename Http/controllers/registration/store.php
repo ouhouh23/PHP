@@ -3,22 +3,17 @@
 use Core\Validator;
 use Core\App;
 use Core\Container;
+use Http\Forms\UserForm;
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$errors = [];
+$form = new UserForm();
 
-if (!Validator::string($password, 5, 20)) {
-	$errors['password'] = 'password length should be between 5-20 characters';
-}
-
-if (!Validator::email($email)) {
-	$errors['email'] = 'please provide correct email';
-}
-
-if (!empty($errors)) {
+if (! $form->validate($email, $password)) {
+	$errors = $form->getErrors();
 	require view_path('registration/create.view.php');
+
 	die();
 }
 
