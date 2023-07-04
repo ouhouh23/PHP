@@ -37,7 +37,9 @@ else {
 		'password' => password_hash($password, PASSWORD_BCRYPT)
 	]);
 
-	login($email);
+	$_SESSION['email'] = $email;
+		
+	session_regenerate_id(true);
 	
 	header('location: /');
 	die();

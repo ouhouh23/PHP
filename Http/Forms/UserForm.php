@@ -19,6 +19,10 @@ class UserForm {
 		return empty($this->errors);
 	}
 
+	public function setError($key, $value) {
+		$this->errors[$key] = $value;
+	}
+
 	public function getErrors() {
 		return $this->errors;
 	}
