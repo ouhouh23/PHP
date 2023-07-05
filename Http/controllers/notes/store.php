@@ -1,31 +1,22 @@
 <?php
 
-use Core\Database;
-use Core\App;
-use Core\Container;
-use Core\Validator;
+use Http\Forms\NoteForm;
+use Http\Models\Note;
+use Core\Session;
 
 $heading = 'Selected note';
 
-$db = App::getContainer()->resolve(Database::class);
+$form = new NoteForm();
 
-$errors = [];
+if ($form->validate($_POST['body'], 1, 20)) {
 
-if (! Validator::string($_POST['body'])) {
-	$errors['body'] = 'Body should be between 1-10 characters!';
+	(new Note())->create($_POST['body']);
+
+	redirect('/notes');
 }
 
-if(!empty($errors)) {
-	return require view_path('notes/create.view.php');
-}
-
-if(empty($errors)) {
-	$db->query('INSERT INTO notes(body, title, user_id) VALUES(:body, :title, :user_id)', [
-		'body' => $_POST['body'],
-		'title' => 'Hardcoded title',
-		'user_id' => 1
-	]);
-}
-
-header('location: /notes');
-die();
+Session::flash('errors', $form->getErrors());
+Session::flash('old', [
+	'body' => $_POST['body']
+]);
+redirect('/notes/create');

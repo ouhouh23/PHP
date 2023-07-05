@@ -1,16 +1,9 @@
 <?php
 
-use Core\Database;
-use Core\App;
-use Core\Container;
+use Http\Models\Note;
 
 $heading = 'Selected note';
 
-$db = App::getContainer()->resolve(Database::class);
-
-$id = $_GET['id'];
-$note = $db->query('select * from notes where id = ?', [$id])->findOrFail();
-
-authorize($note['user_id'] === 1);
+$note = (new Note())->show($_GET['id']);
 
 require view_path("notes/show.view.php");

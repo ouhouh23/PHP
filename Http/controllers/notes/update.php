@@ -1,35 +1,17 @@
 <?php
 
-use Core\Database;
-use Core\App;
-use Core\Container;
-use Core\Validator;
+use Core\Session;
+use Http\Forms\NoteForm;
+use Http\Models\Note;
 
-$db = App::getContainer()->resolve(Database::class);
+$form = new NoteForm;
 
-$id = $_POST['id'];
+if ($form->validate($_POST['body'])) {
+	(new Note())->update($_POST['id'], $_POST['body']);
 
-$note = $db->query('select * from notes where id = ?', [$id])->findOrFail();
-
-authorize($note['user_id'] === 1);
-
-$errors = [];
-
-if (! Validator::string($_POST['body'])) {
-	$errors['body'] = 'Body should be between 1-10 characters!';
+	redirect('/notes');
 }
 
-if(!empty($errors)) {
-	return require view_path('notes/edit.view.php');
-}
+Session::flash('errors', $form->getErrors());
 
-if(empty($errors)) {
-	$db->query('update notes set body = :body where id = :id', [
-		'body' => $_POST['body'],
-		'id' => $_POST['id']
-	]);
-}
-
-header('location: /notes');
-die();
-
+redirect("/note/edit?id={$_POST['id']}");

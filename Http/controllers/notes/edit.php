@@ -1,16 +1,12 @@
 <?php
 
-use Core\Database;
-use Core\App;
-use Core\Container;
+use Http\Models\Note;
+use Core\Session;
 
 $heading = 'Edit note';
 
-$db = App::getContainer()->resolve(Database::class);
+$note = (new Note())->show($_GET['id']);
 
-$id = $_GET['id'];
-$note = $db->query('select * from notes where id = ?', [$id])->findOrFail();
-
-authorize($note['user_id'] === 1);
+$errors = Session::get('errors');
 
 require view_path('notes/edit.view.php');

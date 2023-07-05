@@ -1,13 +1,9 @@
 <?php
 
-use Core\Database;
-use Core\App;
-use Core\Container;
+use Http\Models\Note;
 
-$heading = 'Selected note';
+$heading = 'Notes';
 
-$db = App::getContainer()->resolve(Database::class);
-
-$notes = $db->query('select * from notes where user_id = 1')->findAll();
+$notes = (new Note())->all();
 
 require view_path("notes/index.view.php");

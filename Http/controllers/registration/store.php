@@ -3,6 +3,7 @@
 use Core\Validator;
 use Core\Registrator;
 use Http\Forms\UserForm;
+use Core\Session;
 
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -21,6 +22,9 @@ if ($form->validate($email, $password)) {
 	$form->setError('email', 'This email is already registered');
 }
 
-$errors = $form->getErrors();
+Session::flash('errors', $form->getErrors());
+Session::flash('old', [
+	'email' => $email
+]);
 
-require view_path('registration/create.view.php');
+redirect('/register');
