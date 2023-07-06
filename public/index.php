@@ -5,15 +5,11 @@ use Core\Session;
 
 const BASE_PATH = __DIR__ . '/../';
 
-require BASE_PATH . "core/functions.php";
+require BASE_PATH . "vendor/autoload.php";
 
 session_start();
 
-spl_autoload_register (function ($class) {
-	str_replace('//', DIRECTORY_SEPARATOR, $class);
-
-	require base_path("{$class}.php");
-});
+require BASE_PATH . "core/functions.php";
 
 require base_path('bootstrap.php');
 
